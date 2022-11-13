@@ -28,13 +28,13 @@ export default class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     const prevQuery = prevState.searchQuery;
     const nextQuery = this.state.searchQuery;
+    const prevPage = prevState.page;
+    const nextPage = this.state.page;
 
-    if (prevQuery !== nextQuery && nextQuery.trim().length) {
+    if (prevQuery !== nextQuery || prevPage !== nextPage) {
       this.setState(
         {
-          page: 1,
-          results: [],
-          theEnd: false,
+          page: this.state.page,
         },
         () => {
           this.fetchImages();
@@ -62,7 +62,7 @@ export default class App extends Component {
         this.setState(
           prevState => ({
             results: [...prevState.results, ...images],
-            page: prevState.page + 1,
+            page: prevState.page,
             theEnd: [...prevState.results, ...images].length === total,
           }),
           () => {
@@ -96,6 +96,10 @@ export default class App extends Component {
     this.setState({ modalImage: null });
   };
 
+  onNextFetch = () => {
+    this.setState(({ page }) => ({ page: page + 1 }));
+  };
+
   render() {
     const { results, loading, modalImage, theEnd } = this.state;
     return (
@@ -117,7 +121,7 @@ export default class App extends Component {
           </div>
         )}
         {results.length > 0 && !theEnd && !loading && (
-          <Button onClick={this.fetchImages} />
+          <Button onClick={this.onNextFetch} />
         )}
       </div>
     );
