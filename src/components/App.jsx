@@ -33,12 +33,10 @@ export default class App extends Component {
 
     if (prevQuery !== nextQuery || prevPage !== nextPage) {
       this.setState(
-        {
-          page: this.state.page,
-        },
-        () => {
-          this.fetchImages();
-        }
+        prevQuery !== nextQuery
+          ? { page: this.state.page, results: [] }
+          : { page: this.state.page },
+        this.fetchImages()
       );
     }
   }
