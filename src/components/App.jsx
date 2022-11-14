@@ -30,7 +30,6 @@ export default class App extends Component {
     const nextQuery = this.state.searchQuery;
     const prevPage = prevState.page;
     const nextPage = this.state.page;
-    console.log(prevPage, nextPage);
 
     if (prevQuery !== nextQuery || prevPage !== nextPage) {
       this.setState(
