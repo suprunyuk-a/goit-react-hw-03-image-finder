@@ -22,6 +22,11 @@ export default class App extends Component {
   handleSearchbarSubmit = query => {
     this.setState({
       searchQuery: query,
+      page: 1,
+      results: [],
+      loading: false,
+      modalImage: null,
+      theEnd: false,
     });
   };
 
@@ -32,12 +37,8 @@ export default class App extends Component {
     const nextPage = this.state.page;
 
     if (prevQuery !== nextQuery || prevPage !== nextPage) {
-      this.setState(
-        prevQuery !== nextQuery
-          ? { page: 1, results: [] }
-          : { page: this.state.page },
-        this.fetchImages()
-      );
+      this.setState({ page: this.state.page });
+      this.fetchImages();
     }
   }
 
